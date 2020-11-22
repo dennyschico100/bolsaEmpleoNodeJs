@@ -1,13 +1,21 @@
-import expres from "express";
+import express from "express";
 import morgan from "morgan";
 import pkg from "../package.json";
 import offersRoutes from "./routes/offers.route";
-const app = new expres();
+
+const bodyParser = require("body-parser");
+const app = new express();
 
 app.set("pkg", pkg);
-
 app.use(morgan("dev"));
-app.use(expres.json());
+app.use(bodyParser.json());
+
+const db=require('../src/models/index')
+db.sequelize.sync();
+/*db.sequelize.sync({ force: true }).then(() => {
+    console.log("Drop and re-sync db.");
+  });*/
+
 app.get("/", (req, res) => {
   res.json(
     res.json({
