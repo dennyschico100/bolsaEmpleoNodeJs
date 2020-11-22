@@ -10,7 +10,7 @@ app.set("pkg", pkg);
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 
-const db=require('../src/models/index')
+const db = require("../src/models/index");
 db.sequelize.sync();
 /*db.sequelize.sync({ force: true }).then(() => {
     console.log("Drop and re-sync db.");
