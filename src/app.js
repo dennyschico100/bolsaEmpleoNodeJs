@@ -12,9 +12,28 @@ app.use(bodyParser.json());
 
 const db = require("../src/models/index");
 db.sequelize.sync();
-/*db.sequelize.sync({ force: true }).then(() => {
-    console.log("Drop and re-sync db.");
-  });*/
+db.sequelize.sync({ force: true }).then(() => {
+  console.log("Drop and re-sync db.");
+  definirRoles();
+
+});
+
+function definirRoles() {
+  Role.create({
+    id: 1,
+    name: "user"
+  });
+
+  Role.create({
+    id: 2,
+    name: "moderator"
+  });
+
+  Role.create({
+    id: 3,
+    name: "admin"
+  });
+}
 
 app.get("/", (req, res) => {
   res.json(
