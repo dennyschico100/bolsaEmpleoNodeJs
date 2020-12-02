@@ -1,5 +1,6 @@
 import express from "express";
 import morgan from "morgan";
+
 import pkg from "../package.json";
 import offersRoutes from "./routes/offers.route";
 
@@ -11,14 +12,18 @@ app.use(morgan("dev"));
 app.use(bodyParser.json());
 
 const db = require("../src/models/index");
-db.sequelize.sync();
+const Role=db.roles;
+name: "moderator"
+
 db.sequelize.sync({ force: true }).then(() => {
   console.log("Drop and re-sync db.");
   definirRoles();
+  
 
 });
 
 function definirRoles() {
+  
   Role.create({
     id: 1,
     name: "user"
