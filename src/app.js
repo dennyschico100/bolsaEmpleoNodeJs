@@ -1,9 +1,8 @@
 import express from "express";
 import morgan from "morgan";
-
 import pkg from "../package.json";
 import offersRoutes from "./routes/offers.route";
-
+import authRoutes from "./routes/auth.route";
 const bodyParser = require("body-parser");
 const app = new express();
 
@@ -12,31 +11,28 @@ app.use(morgan("dev"));
 app.use(bodyParser.json());
 
 const db = require("../src/models/index");
-const Role=db.roles;
-name: "moderator"
+const Role = db.roles;
+name: "moderator";
 
 db.sequelize.sync({ force: true }).then(() => {
   console.log("Drop and re-sync db.");
   definirRoles();
-  
-
 });
 
 function definirRoles() {
-  
   Role.create({
     id: 1,
-    name: "user"
+    descripcion: "user"
   });
 
   Role.create({
     id: 2,
-    name: "moderator"
+    descripcion: "moderator"
   });
 
   Role.create({
     id: 3,
-    name: "admin"
+    descripcion: "admin"
   });
 }
 
@@ -50,6 +46,7 @@ app.get("/", (req, res) => {
   );
 });
 app.use("/offers", offersRoutes);
+app.use("/api/auth",authRoutes);
 export default app;
 
 //Mapas estrategicos

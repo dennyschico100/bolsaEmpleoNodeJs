@@ -1,26 +1,28 @@
 const db = require("../models");
 const ROLES = db.ROLES;
 const User = db.users;
-
-validateUserExists = (req, res, next) => {
+const validateAlreadyUserExists = (req, res, next) => {
   User.findOne({
     where: {
       email: req.body.email
     }
   }).then(user => {
-    res.status(400).send({
-      message: "Ese correo ya existe en la db !"
-    });
-    return;
+    if (user) {
+      res.status(400).send({
+        message: "Ese correo ya existe en la base de datos !"
+      });
+      return;
+    }
+
+    next();
   });
-  next();
 };
 
-checkRolesExistes = (req, res, next) => {
+const checkRolesExists = (req, res, next) => {
   if (req.body.roles) {
     for (let i = 0; i < req.body.roles.length; i++) {
       if (!ROLES.includes(req.body.roles[i])) {
-        res.status(400).send({
+        res.status(400).json({
           message: "Rol proporcionado es invalido " + req.body.roles[i]
         });
         return;
@@ -30,9 +32,4 @@ checkRolesExistes = (req, res, next) => {
   next();
 };
 
-const verifySignUp={
-    validateUserExists:validateUserExists,
-    checkRolesExistes:checkRolesExistes
-}
-module.exports=verifySignUp;
-
+export { validateAlreadyUserExists, checkRolesExists };
