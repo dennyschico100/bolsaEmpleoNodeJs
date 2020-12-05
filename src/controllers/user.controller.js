@@ -1,15 +1,16 @@
-exports.allAccess = (req, res) => {
+export const allAccess = (req, res) => {
     res.status(200).send("Conteniod publico.");
   };
   
-  exports.userBoard = (req, res) => {
+  export const menuUsuario = (req, res) => {
     res.status(200).send("Contenido usuario.");
   };
   
-  exports.adminBoard = (req, res) => {
+  export const menuAdmin = (req, res) => {
     res.status(200).send("Contenido admin.");
   };
   
-  exports.moderatorBoard = (req, res) => {
+  export const menuModerador = (req, res) => {
     res.status(200).send("Contenido moderador.");
   };
+  

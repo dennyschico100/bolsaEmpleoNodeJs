@@ -3,6 +3,8 @@ import morgan from "morgan";
 import pkg from "../package.json";
 import offersRoutes from "./routes/offers.route";
 import authRoutes from "./routes/auth.route";
+import userRoutes from "./routes/users.route";
+
 const bodyParser = require("body-parser");
 const app = new express();
 
@@ -45,8 +47,11 @@ app.get("/", (req, res) => {
     })
   );
 });
+
+
 app.use("/offers", offersRoutes);
 app.use("/api/auth",authRoutes);
+app.use("/api/",userRoutes);
 export default app;
 
 //Mapas estrategicos

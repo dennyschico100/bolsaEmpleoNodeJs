@@ -36,7 +36,7 @@ export const singUp = (req, res) => {
     apellidos,
     email,
     contraseña: bcrypt.hashSync(contraseña, 10),
-    contraseña2: bcrypt.hashSync(contraseña, 10),
+    contraseña2: bcrypt.hashSync(contraseña2, 10),
     nacionalidad,
     telefono,
     estado
@@ -66,11 +66,11 @@ export const singUp = (req, res) => {
     });
 };
 
-/*
-exports.signin = (req, res) => {
+
+export const signin = (req, res) => {
   User.findOne({
     where: {
-      username: req.body.email
+      email: req.body.email
     }
   })
     .then(user => {
@@ -79,8 +79,8 @@ exports.signin = (req, res) => {
       }
 
       const passwordIsValid = bcrypt.compareSync(
-        req.body.password,
-        user.password
+        req.body.contraseña,
+        user.contraseña
       );
 
       if (!passwordIsValid) {
@@ -90,7 +90,7 @@ exports.signin = (req, res) => {
         });
       }
 
-      const token = jwt.sign({ id: user.id }, config.secret, {
+      const token = jwt.sign({ id: user.id_usuario }, config.secret, {
         expiresIn: 86400 // 24 horas
       });
 
@@ -98,7 +98,7 @@ exports.signin = (req, res) => {
 
       user.getRoles().then(roles => {
         for (let i = 0; i < roles.length; i++) {
-          authorities.push("ROLE_" + roles[i].name.toUpperCase());
+          authorities.push("ROLE_" + roles[i].descripcion.toUpperCase());
         }
         res.status(200).send({
           id: user.id,
@@ -111,4 +111,4 @@ exports.signin = (req, res) => {
     .catch(err => {
       res.status(500).send({ message: err.message });
     });
-};*/
+};

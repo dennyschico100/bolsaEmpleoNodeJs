@@ -1,15 +1,18 @@
-import { verifySignUp } from "../middlewares/";
+import { verifySignUp} from "../middlewares/";
 import { Router } from "express";
 //const controller = require("../controllers/auth.controller");
 import * as authController from "../controllers/auth.controller";
 
 const router = new Router();
 
+
 router.post(
-    "/signup",
-    [verifySignUp.checkRolesExists, verifySignUp.validateAlreadyUserExists],
-    authController.singUp
-  );
+  "/signup",
+  [verifySignUp.checkRolesExists, verifySignUp.validateAlreadyUserExists],
+  authController.singUp
+);
+
+router.get("/signin",authController.signin);
 
 /*
 module.exports = function(app) {

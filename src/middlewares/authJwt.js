@@ -22,10 +22,10 @@ export  const verifyToken = (req, res, next) => {
 };
 
 export const isAdmin = (req, res, next) => {
-  User.findByPk(req.userId).then(user => {
+  User.findByPk(1).then(user => {
     user.getRoles().then(roles => {
       for (let i = 0; i < roles.length; i++) {
-        if (roles[i].name === "admin") {
+        if (roles[i].descripcion === "admin") {
           next();
           return;
         }
