@@ -1,4 +1,5 @@
 const db = require("../models");
+const { success, error, validation } = require("../libs/responseApi");
 const Offers = db.offers;
 const Op = db.Sequelize.Op;
 
@@ -14,12 +15,15 @@ function isIdUnique(id) {
 export const getOffers = (req, res) => {
   Offers.findAll()
     .then(data => {
-      res.send(data);
+      res.status(200).json(success("OK", { data }, res.statusCode));
     })
     .catch(err => {
-      res.status(500).send({
+      res
+        .status(500)
+        .json(error("No se encontraron registros"+err, res.statusCode));
+      /*res.status(500).send({
         message: "No se encontraron resgistros"
-      });
+      });*/
     });
 };
 
@@ -77,9 +81,9 @@ export const updateOffer = (req, res) => {
 };
 
 export const deleteOffer = (req, res) => {
-  const id =req.params.id
+  const id = req.params.id;
   Offers.destroy({
-    where: {id:id},
+    where: { id: id },
     truncate: false
   })
     .then(nums => {

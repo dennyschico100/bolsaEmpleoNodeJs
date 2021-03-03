@@ -4,7 +4,7 @@ import pkg from "../package.json";
 import offersRoutes from "./routes/offers.route";
 import authRoutes from "./routes/auth.route";
 import userRoutes from "./routes/users.route";
-
+import applicationRoutes from "./routes/applications.route";
 const bodyParser = require("body-parser");
 const app = new express();
 
@@ -16,7 +16,7 @@ const db = require("../src/models/index");
 const Role = db.roles;
 name: "moderator";
 
-db.sequelize.sync({ force: true }).then(() => {
+db.sequelize.sync({ force: !false }).then(() => {
   console.log("Drop and re-sync db.");
   definirRoles();
 });
@@ -49,9 +49,10 @@ app.get("/", (req, res) => {
 });
 
 
-app.use("/offers", offersRoutes);
+app.use("/api/offers", offersRoutes);
 app.use("/api/auth",authRoutes);
 app.use("/api/",userRoutes);
+app.use("/api/applications/",applicationRoutes );
 export default app;
 
 //Mapas estrategicos
